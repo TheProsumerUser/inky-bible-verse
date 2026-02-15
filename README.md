@@ -27,7 +27,7 @@ cd /usr/local/inkypi/src/plugins
 
 3. Clone this repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/bible-verse-clock.git bible_verse
+git clone https://github.com/TheProsumerUser/bible-verse-clock.git bible_verse
 ```
 
 4. Restart InkyPi:
