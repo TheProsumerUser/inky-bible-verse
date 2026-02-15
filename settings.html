@@ -1,0 +1,323 @@
+<style>
+.visual-grid { display: grid; gap: 10px; margin: 15px 0; }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+.visual-option { cursor: pointer; padding: 8px; background: #f8f9fa; border: 2px solid #ddd; border-radius: 6px; text-align: center; transition: all 0.2s; }
+.visual-option:hover { border-color: #667eea; background: #e8f4f8; }
+.visual-option.selected { border-color: #667eea; background: #e3f2fd; }
+.option-label { font-size: 12px; font-weight: 500; color: #666; margin-top: 6px; }
+.border-preview { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }
+.border-box { width: 70%; height: 70%; background: #f8f4e8; }
+.layout-preview { width: 100%; aspect-ratio: 8/5; background: #f8f4e8; border: 1px solid #ddd; border-radius: 4px; padding: 8px; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 6px; }
+.block { border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 600; color: white; text-transform: uppercase; }
+.verse-block { background: #667eea; }
+.translation-block { background: #95a5a6; }
+.reference-block { background: #764ba2; }
+.size-preview { width: 100%; aspect-ratio: 8/5; background: #f8f4e8; border: 1px solid #ddd; border-radius: 4px; padding: 8px; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 6px; }
+</style>
+
+<div class="form-group">
+    <label for="translation" class="form-label">Bible Translation:</label>
+    <select name="translation" id="translation" class="form-control">
+        <option value="NASB">NASB (New American Standard)</option>
+        <option value="KJV">KJV (King James)</option>
+        <option value="NIV">NIV (New International)</option>
+        <option value="ESV">ESV (English Standard)</option>
+        <option value="NKJV">NKJV (New King James)</option>
+        <option value="NLT">NLT (New Living Translation)</option>
+        <option value="CSB">CSB (Christian Standard Bible)</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="dstOverride" class="form-label">Daylight Saving Time:</label>
+    <select name="dstOverride" id="dstOverride" class="form-control">
+        <option value="auto">Automatic (Follow System)</option>
+        <option value="always_dst">Always Use DST</option>
+        <option value="never_dst">Never Use DST</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="fontName" class="form-label">Font:</label>
+    <select name="fontName" id="fontName" class="form-control">
+        <option value="Jost" selected>Jost (Sans-serif)</option>
+        <option value="Napoli">Napoli</option>
+        <option value="Dogica">Dogica (Pixel)</option>
+        <option value="DS-Digital">DS-Digital</option>
+    </select>
+</div>
+
+<div class="form-group" style="margin-top: 25px;">
+    <label class="form-label"><strong>Layout Style:</strong></label>
+    <input type="hidden" name="layoutStyle" id="layoutStyle" value="corner"/>
+    <div class="visual-grid grid-4">
+        <div class="visual-option selected" data-value="corner">
+            <div class="layout-preview">
+                <div class="block verse-block" style="height: 55%; width: 100%;">Verse</div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div class="block translation-block" style="height: 10px; width: 40px; font-size: 6px;">Trans</div>
+                    <div class="block reference-block" style="height: 12px; width: 60px; font-size: 6px;">Ref</div>
+                </div>
+            </div>
+            <div class="option-label">Corner</div>
+        </div>
+        <div class="visual-option" data-value="center">
+            <div class="layout-preview" style="align-items: center;">
+                <div class="block verse-block" style="height: 55%; width: 85%;">Verse</div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%;">
+                    <div class="block translation-block" style="height: 10px; width: 40px; margin-left: 15%; font-size: 6px;">Trans</div>
+                    <div class="block reference-block" style="height: 12px; width: 60px; margin-right: 15%; font-size: 6px;">Ref</div>
+                </div>
+            </div>
+            <div class="option-label">Center</div>
+        </div>
+        <div class="visual-option" data-value="left">
+            <div class="layout-preview" style="align-items: flex-start;">
+                <div class="block verse-block" style="height: 55%; width: 100%;">Verse</div>
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                    <div class="block translation-block" style="height: 10px; width: 40px; font-size: 6px;">Trans</div>
+                    <div class="block reference-block" style="height: 12px; width: 60px; font-size: 6px;">Ref</div>
+                </div>
+            </div>
+            <div class="option-label">Left</div>
+        </div>
+        <div class="visual-option" data-value="right">
+            <div class="layout-preview" style="align-items: flex-end;">
+                <div class="block verse-block" style="height: 55%; width: 100%;">Verse</div>
+                <div style="display: flex; flex-direction: column; gap: 3px; align-items: flex-end;">
+                    <div class="block translation-block" style="height: 10px; width: 40px; font-size: 6px;">Trans</div>
+                    <div class="block reference-block" style="height: 12px; width: 60px; font-size: 6px;">Ref</div>
+                </div>
+            </div>
+            <div class="option-label">Right</div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="form-label"><strong>Size Preset:</strong></label>
+    <input type="hidden" name="sizePreset" id="sizePreset" value="medium"/>
+    <div class="visual-grid grid-4">
+        <div class="visual-option" data-value="small">
+            <div class="size-preview">
+                <div style="flex: 1; display: flex; align-items: flex-start;">
+                    <div class="block verse-block" style="width: 100%; height: 35px; font-size: 6px;">Verse</div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="block translation-block" style="height: 9px; width: 35px; font-size: 5px;">Trans</div>
+                    <div class="block reference-block" style="height: 11px; width: 55px; font-size: 5px;">Ref</div>
+                </div>
+            </div>
+            <div class="option-label">Small</div>
+        </div>
+        <div class="visual-option selected" data-value="medium">
+            <div class="size-preview">
+                <div style="flex: 1; display: flex; align-items: flex-start;">
+                    <div class="block verse-block" style="width: 100%; height: 45px; font-size: 7px;">Verse</div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="block translation-block" style="height: 11px; width: 40px; font-size: 6px;">Trans</div>
+                    <div class="block reference-block" style="height: 13px; width: 60px; font-size: 6px;">Ref</div>
+                </div>
+            </div>
+            <div class="option-label">Medium</div>
+        </div>
+        <div class="visual-option" data-value="large">
+            <div class="size-preview">
+                <div style="flex: 1; display: flex; align-items: flex-start;">
+                    <div class="block verse-block" style="width: 100%; height: 52px; font-size: 8px;">Verse</div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="block translation-block" style="height: 13px; width: 45px; font-size: 6px;">Trans</div>
+                    <div class="block reference-block" style="height: 16px; width: 70px; font-size: 7px;">Ref</div>
+                </div>
+            </div>
+            <div class="option-label">Large</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="form-label"><strong>Border Style:</strong></label>
+    <input type="hidden" name="borderStyle" id="borderStyle" value="none"/>
+    <div class="visual-grid grid-5">
+        <div class="visual-option selected" data-value="none">
+            <div class="border-preview">
+                <div class="border-box" style="border: none;"></div>
+            </div>
+            <div class="option-label">None</div>
+        </div>
+        <div class="visual-option" data-value="solid">
+            <div class="border-preview">
+                <div class="border-box" style="border: 3px solid #2c3e50;"></div>
+            </div>
+            <div class="option-label">Solid</div>
+        </div>
+        <div class="visual-option" data-value="dashed">
+            <div class="border-preview">
+                <div class="border-box" style="border: 3px dashed #2c3e50;"></div>
+            </div>
+            <div class="option-label">Dashed</div>
+        </div>
+        <div class="visual-option" data-value="dotted">
+            <div class="border-preview">
+                <div class="border-box" style="border: 3px dotted #2c3e50;"></div>
+            </div>
+            <div class="option-label">Dotted</div>
+        </div>
+        <div class="visual-option" data-value="double">
+            <div class="border-preview">
+                <div class="border-box" style="border: 5px double #2c3e50;"></div>
+            </div>
+            <div class="option-label">Double</div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="borderWidth" class="form-label">Border Width:</label>
+    <select name="borderWidth" id="borderWidth" class="form-control">
+        <option value="1">1px</option>
+        <option value="2">2px</option>
+        <option value="3" selected>3px</option>
+        <option value="4">4px</option>
+        <option value="5">5px</option>
+        <option value="6">6px</option>
+        <option value="7">7px</option>
+        <option value="8">8px</option>
+        <option value="9">9px</option>
+        <option value="10">10px</option>
+    </select>
+    <small class="form-text text-muted">Only applies when border is selected</small>
+</div>
+
+<div class="form-group">
+    <label for="bgColor" class="form-label">Background Color:</label>
+    <input type="color" name="bgColor" id="bgColor" class="color-picker" value="#f8f4e8"/>
+</div>
+
+<div class="form-group">
+    <label for="verseColor" class="form-label">Verse Text Color:</label>
+    <input type="color" name="verseColor" id="verseColor" class="color-picker" value="#2c3e50"/>
+</div>
+
+<div class="form-group">
+    <label for="refColor" class="form-label">Reference Color:</label>
+    <input type="color" name="refColor" id="refColor" class="color-picker" value="#34495e"/>
+</div>
+
+<div class="form-group">
+    <label for="transColor" class="form-label">Translation Color:</label>
+    <input type="color" name="transColor" id="transColor" class="color-picker" value="#7f8c8d"/>
+</div>
+
+<div class="form-group">
+    <label for="borderColor" class="form-label">Border Color:</label>
+    <input type="color" name="borderColor" id="borderColor" class="color-picker" value="#2c3e50"/>
+</div>
+
+<div class="form-group" style="border-top: 2px solid #ddd; padding-top: 20px; margin-top: 25px;">
+    <label class="form-label"><strong>Offline Download:</strong></label>
+    <small class="form-text text-muted">Select translations to download for offline use:</small>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;">
+        <div class="form-check">
+            <input type="checkbox" name="downloadTranslations" value="NASB" id="dl_NASB"/>
+            <label for="dl_NASB">NASB</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="downloadTranslations" value="KJV" id="dl_KJV"/>
+            <label for="dl_KJV">KJV</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="downloadTranslations" value="NIV" id="dl_NIV"/>
+            <label for="dl_NIV">NIV</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="downloadTranslations" value="ESV" id="dl_ESV"/>
+            <label for="dl_ESV">ESV</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="downloadTranslations" value="NKJV" id="dl_NKJV"/>
+            <label for="dl_NKJV">NKJV</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="downloadTranslations" value="NLT" id="dl_NLT"/>
+            <label for="dl_NLT">NLT</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="downloadTranslations" value="CSB" id="dl_CSB"/>
+            <label for="dl_CSB">CSB</label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="triggerDownload" class="form-label">Start Download:</label>
+    <select name="triggerDownload" id="triggerDownload" class="form-control">
+        <option value="no">No</option>
+        <option value="yes">Yes - Download Now</option>
+    </select>
+    <small class="form-text text-muted">Set to "Yes" and save to download selected translations</small>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Load saved settings
+    if (pluginSettings?.translation) document.getElementById('translation').value = pluginSettings.translation;
+    if (pluginSettings?.dstOverride) document.getElementById('dstOverride').value = pluginSettings.dstOverride;
+    if (pluginSettings?.fontName) document.getElementById('fontName').value = pluginSettings.fontName;
+    if (pluginSettings?.bgColor) document.getElementById('bgColor').value = pluginSettings.bgColor;
+    if (pluginSettings?.verseColor) document.getElementById('verseColor').value = pluginSettings.verseColor;
+    if (pluginSettings?.refColor) document.getElementById('refColor').value = pluginSettings.refColor;
+    if (pluginSettings?.transColor) document.getElementById('transColor').value = pluginSettings.transColor;
+    if (pluginSettings?.borderColor) document.getElementById('borderColor').value = pluginSettings.borderColor;
+    if (pluginSettings?.borderWidth) document.getElementById('borderWidth').value = pluginSettings.borderWidth;
+    if (pluginSettings?.triggerDownload) document.getElementById('triggerDownload').value = pluginSettings.triggerDownload;
+    
+    // Load visual selections
+    if (pluginSettings?.layoutStyle) {
+        document.getElementById('layoutStyle').value = pluginSettings.layoutStyle;
+        document.querySelectorAll('[data-value="' + pluginSettings.layoutStyle + '"]')[0]?.classList.add('selected');
+    }
+    if (pluginSettings?.sizePreset) {
+        document.getElementById('sizePreset').value = pluginSettings.sizePreset;
+        const sizeOptions = document.querySelectorAll('.visual-option[data-value]');
+        sizeOptions.forEach(opt => {
+            if (opt.getAttribute('data-value') === pluginSettings.sizePreset && opt.closest('.form-group').querySelector('#sizePreset')) {
+                opt.classList.add('selected');
+            }
+        });
+    }
+    if (pluginSettings?.borderStyle) {
+        document.getElementById('borderStyle').value = pluginSettings.borderStyle;
+        const borderOptions = document.querySelectorAll('.visual-option[data-value]');
+        borderOptions.forEach(opt => {
+            if (opt.getAttribute('data-value') === pluginSettings.borderStyle && opt.closest('.form-group').querySelector('#borderStyle')) {
+                opt.classList.add('selected');
+            }
+        });
+    }
+    
+    // Load download checkboxes
+    if (pluginSettings?.downloadTranslations) {
+        const selected = Array.isArray(pluginSettings.downloadTranslations) ? pluginSettings.downloadTranslations : [pluginSettings.downloadTranslations];
+        selected.forEach(trans => {
+            const checkbox = document.getElementById('dl_' + trans);
+            if (checkbox) checkbox.checked = true;
+        });
+    }
+    
+    // Visual option click handlers
+    document.querySelectorAll('.visual-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const formGroup = this.closest('.form-group');
+            const hiddenInput = formGroup.querySelector('input[type="hidden"]');
+            if (hiddenInput) {
+                formGroup.querySelectorAll('.visual-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                hiddenInput.value = this.getAttribute('data-value');
+            }
+        });
+    });
+});
+</script>
